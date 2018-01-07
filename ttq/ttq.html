@@ -1,0 +1,162 @@
+<html>
+
+<head>
+<style>
+body
+{
+    margin-left: 200px;
+    margin-right: 200px;
+}
+h1
+{
+    text-align: center;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<!-- <script src="http://d3js.org/d3.v4.min.js"></script> -->
+</head>
+
+
+<body>
+<h1>Time 'Till Quinny !</h1>
+<hr>
+
+If you're a noob, we can still calculate your distance from Q! Just punch in your current level and xp, obtained via a `!rank` :D <br />
+Lvl.<input id="lvl"></input> <br />
+Exp.<input id="expmin"></input> / <input id="expmax"></input> <br />
+<button onclick="comput()">Do the Math!</button>
+<div id="computed"></div>
+<br />
+<hr>
+
+And here are dem mad stats for the bestest dudes.
+<table>
+    <tr>
+        <th>#</th>
+        <th>Dude</th>
+        <th>XP 'Till Quin</th>
+        <th>Average Message-Minutes Left</th>
+        <th>In Hours</th>
+    </tr>
+    <tbody id="lardboard">
+        <tr>
+            <td>1</td>
+            <td>Quinny Hwang #2193</td>
+            <td>:o</td>
+            <td>:o</td>
+            <td>:o</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+More info on <a href="https://mee6.xyz/levels/310961725983686656">dis meeb shit</a> website.
+<br />
+<hr>
+<br />
+Good luck and have a nice day. <br /> -7
+
+<script>
+
+    // https://github.com/gnuns/AllOrigins
+    // https://d3js.org/
+        // https://bl.ocks.org/pstuffa
+    // https://github.com/cufcq/cufcq
+
+var disparityAdder, qErrata;
+
+$.get('http://allorigins.us/get?method=raw&url=' + encodeURIComponent('https://mee6.xyz/levels/310961725983686656') + '&callback=?', function(data){
+
+    var sauce = document.createElement( "div" );
+    sauce.innerHTML = data;
+
+    var juicyShit = sauce.getElementsByTagName( "h3" );
+    var perturbation = sauce.getElementsByTagName( "h5" );
+
+    var mathBox = x => 5 * x * x + 50 * x + 100;
+
+    var q = parseInt( juicyShit[2].innerText.substring( 6 ) );
+
+    disparityAdder = l => q - l - 1 < 0 ? 0 : Array.from( new Array( q - l - 1 ), (v, i) => l + i + 1 ).reduce( (s, i) => s + mathBox( i ), 0 );
+
+    qErrata = parseInt( perturbation[0].innerText.substring( 0, perturbation[0].innerText.indexOf( " " ) ) );
+    var perturb = l => qErrata + parseInt( l.substring( l.indexOf( " " ) + 3, l.indexOf( " XP" ) ) ) - parseInt( l.substring( 0, l.indexOf( " " ) ) );
+
+
+    sauce.remove();
+
+    var statBox = document.getElementById( "lardboard" );
+
+    for( var i = 4; i < juicyShit.length; i += 3 )
+    {
+        // console.log( juicyShit[i].innerHTML )
+        var rho = document.createElement( "tr" );
+
+        var todd = document.createElement( "td" );
+        todd.innerText = Math.floor( i / 3 ) + 1;
+        rho.appendChild( todd );
+
+        todd = document.createElement( "td" );
+        todd.innerText = juicyShit[i].innerText;
+        rho.appendChild( todd );
+
+        todd = document.createElement( "td" );
+        var xp = disparityAdder( parseInt( juicyShit[i+1].innerText.substring( 6 ) ) ) + perturb( perturbation[ Math.floor( i / 3 ) ].innerText );
+        todd.innerText = xp;
+        rho.appendChild( todd );
+
+        todd = document.createElement( "td" );
+        todd.innerText = xp / 20;
+        rho.appendChild( todd );
+
+        todd = document.createElement( "td" );
+        todd.innerText = xp / 20 / 60;
+        rho.appendChild( todd );
+
+        statBox.appendChild( rho );
+    }
+
+    // document.body.innerHTML = juicyShit[1].innerText;
+} );
+
+var lvlBox = document.getElementById( "lvl" );
+var expMinBox = document.getElementById( "expmin" ), expMaxBox = document.getElementById( "expmax" );
+
+function comput()
+{
+    var l = parseInt( lvlBox.value )
+    var out = document.getElementById( "computed" );
+    out.innerHTML = "You, my dude, have ";
+    var xp = disparityAdder( parseInt( lvlBox.value ) ) + qErrata + parseInt( expMaxBox.value ) - parseInt( expMinBox.value );
+    out.innerHTML += xp;
+    out.innerHTML += " XP left to catch up, which is ";
+    out.innerHTML += xp / 20;
+    out.innerHTML += " message minutes on average. That means it'll probably take ";
+    out.innerHTML += xp / 20 / 60;
+    out.innerHTML += " hours to usurp her."
+}
+
+</script>
+
+
+
+</body>
+
+</html>
