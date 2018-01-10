@@ -1,0 +1,178 @@
+<html>
+
+<head>
+
+<style>
+body
+{
+	background-color: lightblue;
+	display: grid;
+}
+input
+{
+	margin: auto;
+}
+img
+{
+	margin: auto;
+}
+canvas
+{
+	/*border: solid black 10px;*/
+}
+</style>
+
+<!-- <script type="text/javascript" src="caman.full.min.js"></script> -->
+<!-- <script type="text/javascript" src="mirror.js"></script> -->
+<!-- <script type="text/javascript" src="grafi.js"></script> -->
+
+<title>Bitch.</title>
+
+</head>
+
+
+<body>
+
+
+<input type="file" accept="image/*" id="fileUpload"> <br />
+<canvas id="canvas"></canvas>  
+
+<script type="text/javascript">
+
+//https://stackoverflow.com/a/22255905 thonk ye dude
+
+
+
+
+    function el(id){return document.getElementById(id);} // Get elem by ID
+
+var canvas  = el("canvas");
+var context = canvas.getContext("2d");
+
+
+
+function readImage() {
+	if ( this.files && this.files[0] ) {
+	    var FR= new FileReader();
+	    FR.onload = function(e) {
+	       var img = new Image();
+	       img.src = e.target.result;
+	       img.addEventListener("load", function() {
+	    	el("canvas").height = img.height;
+	    	el("canvas").width = img.width;
+
+	       	context.translate(0, canvas.height)
+	       	context.scale(1, -1);
+	         context.drawImage(img, 0, 0);
+
+	         context.scale(1, -1);
+	         context.fillStyle = "teal";
+	         context.strokeStyle = "black";
+	         context.font = "26pt Comic Sans MS";
+	         context.fillText( "Bitch.", canvas.width - 150, -50 );
+	         context.strokeText( "Bitch.", canvas.width - 150, -50 );
+	var i = document.createElement( "img" );
+	i.src = document.getElementById( "canvas" ).toDataURL( "image/png" );
+	document.body.appendChild( i );
+	document.body.removeChild( canvas );
+	       });
+	    };
+	    FR.readAsDataURL( this.files[0] );
+	}
+
+
+}
+
+el("fileUpload").addEventListener("change", readImage, false);
+
+
+
+
+
+
+
+
+
+
+// https://jsfiddle.net/KJW4E/905/
+var CLIPBOARD = new CLIPBOARD_CLASS("canvas", true);
+
+/**
+ * image pasting into canvas
+ * 
+ * @param {string} canvas_id - canvas id
+ * @param {boolean} autoresize - if canvas will be resized
+ */
+function CLIPBOARD_CLASS(canvas_id, autoresize) {
+	var _self = this;
+	var canvas = document.getElementById(canvas_id);
+	var ctx = document.getElementById(canvas_id).getContext("2d");
+
+	//handlers
+	document.addEventListener('paste', function (e) { _self.paste_auto(e); }, false);
+
+	//on paste
+	this.paste_auto = function (e) {
+		if (e.clipboardData) {
+			var items = e.clipboardData.items;
+			if (!items) return;
+			
+			//access data directly
+			for (var i = 0; i < items.length; i++) {
+				if (items[i].type.indexOf("image") !== -1) {
+					//image
+					var blob = items[i].getAsFile();
+					var URLObj = window.URL || window.webkitURL;
+					var source = URLObj.createObjectURL(blob);
+					this.paste_createImage(source);
+				}
+			}
+			e.preventDefault();
+		}
+	};
+	//draw pasted image to canvas
+	this.paste_createImage = function (source) {
+		var pastedImage = new Image();
+		pastedImage.onload = function () {
+			if(autoresize == true){
+				//resize
+				canvas.width = pastedImage.width;
+				canvas.height = pastedImage.height;
+			}
+			else{
+				//clear canvas
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+			}
+	       	context.translate(0, canvas.height)
+	       	context.scale(1, -1);
+	         context.drawImage(pastedImage, 0, 0);
+
+	         context.scale(1, -1);
+	         context.fillStyle = "teal";
+	         context.strokeStyle = "black";
+	         context.font = "26pt Comic Sans MS";
+	         context.fillText( "Bitch.", canvas.width - 150, -50 );
+	         context.strokeText( "Bitch.", canvas.width - 150, -50 );
+
+
+
+	         	var i = document.createElement( "img" );
+	i.src = document.getElementById( "canvas" ).toDataURL( "image/png" );
+	document.body.appendChild( i );
+	document.body.removeChild( canvas );
+		};
+		pastedImage.src = source;
+	};
+}
+
+
+
+
+
+
+</script>
+
+</body>
+
+
+</html>
