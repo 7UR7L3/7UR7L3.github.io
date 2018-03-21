@@ -52,130 +52,6 @@ input
 
 <body>
 
-<h1>Org Notes</h1>
-<hr><hr>
-
-<h2>Performance</h2>
-<p>Prefix name		deca	hecto	kilo	mega	giga	tera	peta	exa	zetta	yotta
-Prefix symbol		da	h	k	M	G	T	P	E	Z	Y
-Factor		10^0	10^1	10^2	10^3	10^6	10^9	10^12	10^15	10^18	10^21	10^24
-
-Prefix name         	deci	centi	milli	micro	nano	pico	femto	atto	zepto	yocto
-Prefix symbol		d	c	m	μ	n	p	f	a	z	y
-Factor		10^0	10^−1	10^−2	10^−3	10^−6	10^−9	10^−12	10^−15	10^−18	10^−21	10^−24
-
-Hz = 1 / s
-
-execution time [sec / function] = [sec / cycle] * [cycles / instruction] * [instructions / function]
-
-clock rate = cycles / sec
-CPI = cycles / instruction
-
-performance [instructions / sec] = ( clock rate [cycles / sec] ) / ( CPI [cycles / instruction] )
-<input id="performance0" />		 = <input id="clockRate0" oninput="perf0();" />	 / <input id="CPI0" oninput="perf0();" />
-</p>
-<hr>
-<h2>Decimal | Binary | Hex</h2>
-<p>Decimal	<input style="width: 24em;" id="dec1" oninput="perf1dec();" />
-Binary	<input style="width: 24em;" id="bin1" oninput="perf1bin();" />
-Hex	<input style="width: 24em;" id="hex1" oninput="perf1hex();" />
-</p>
-<!-- <input id="f01" oninput="perf1();" /> x<input id="f11" oninput="perf1();" />, x<input id="f21" oninput="perf1();" />, x<input id="f31" oninput="perf1();" />
-	-> <input style="width: 24em;" id="outInstB1" /> ~ <input style="width: 24em;" id="outInstBu1" />
-	-> <input style="width: 24em;" id="outInstX1" />
-
-<input id="f02" oninput="perf2();" /> x<input id="f12" oninput="perf2();" />, <input id="f22" oninput="perf2();" />( x<input id="f32" oninput="perf2();" /> )
-	-> <input style="width: 24em;" id="outInstB2" /> ~ <input style="width: 24em;" id="outInstBu2" />
-	-> <input style="width: 24em;" id="outInstX2" /> -->
-
-<h2>Machine Code -> Assembly Code</h2>
-<p>0x<input id="hex3" oninput="perf3();" />
-<input style="width: 24em;" id="bin3" />
-<input style="width: 24em;" id="binsp3" />
-	rd=x<input id="rd3" />
-	rs1=x<input id="rs13" />
-	rs2=x<input id="rs23" />
-	imm[11:0]=<input id="imm11003" />
-	imm[12|10:5,4:1|11]=<input id="immbranch3" />
-	imm[11:5,4:0]=<input id="imm110504003" />
-	imm[20|10:1|11|19:12]=<input id="immjal3" />
-	imm[31:12]=<input id="imm31123" />
-</p>
-<hr>
-<h2>RISC-V Assembly Language</h2>
-<p>      Category       Instruction                    Example             Meaning                      Comments
-      -----------------------------------------------------------------------------------------------------------------------------------------------
-      Arithmetic     Add                            add x5, x6, x7      x5 = x6 + x7                 Three register operands
-                     Subtract                       sub x5, x6, x7      x5 = x6 - x7                 Three register operands
-                     Add immediate                  addi x5, x6, 20     x5 = x6 + 20                 Used to add constants
-                     Set if less than               slt x5, x6, x7      x5 = 1 if x5 < x6, else 0    Three register operands
-                     Set if less than, unsigned     sltu x5, x6, x7     x5 = 1 if x5 < x6, else 0    Three register operands
-                     Set if less than, immediate    slti x5, x6, x7     x5 = 1 if x5 < x6, else 0    Comparison with immediate
-                     Set if less than immediate,    sltiu x5, x6, x7    x5 = 1 if x5 < x6, else 0    Comparison with immediate
-                     uns.
-                     Multiply                       mul x5, x6, x7      x5 = x6 × x7                 Lower 64 bits of 128-bit product
-                     Multiply high                  mulh x5, x6, x7     x5 = (x6 × x7) >> 64         Upper 64 bits of 128-bit signed product
-                     Multiply high, unsigned        mulhu x5, x6, x7    x5 = (x6 × x7) >> 64         Upper 64 bits of 128-bit unsigned
-                                                                                                     product
-                     Multiply high, signed-         mulhsu x5, x6, x7   x5 = (x6 × x7) >> 64         Upper 64 bits of 128-bit signed-
-                     unsigned                                                                        unsigned product
-                     Divide                         div x5, x6, x7      x5 = x6 / x7                 Divide signed 64-bit numbers
-                     Divide unsigned                divu x5, x6, x7     x5 = x6 / x7                 Divide unsigned 64-bit numbers
-                     Remainder                      rem x5, x6, x7      x5 = x6 % x7                 Remainder of signed 64-bit division
-                     Remainder unsigned             remu x5, x6, x7     x5 = x6 % x7                 Remainder of unsigned 64-bit division
-      -----------------------------------------------------------------------------------------------------------------------------------------------
-                     Load doubleword                ld x5, 40(x6)       x5 = Memory[x6 + 40]         Doubleword from memory to register
-                     Store doubleword               sd x5, 40(x6)       Memory[x6 + 40] = x5         Doubleword from register to memory
-                     Load word                      lw x5, 40(x6)       x5 = Memory[x6 + 40]         Word from memory to register
-                     Load word, unsigned            lwu x5, 40(x6)      x5 = Memory[x6 + 40]         Unsigned word from memory to register
-                     Store word                     sw x5, 40(x6)       Memory[x6 + 40] = x5         Word from register to memory
-                     Load halfword                  lh x5, 40(x6)       x5 = Memory[x6 + 40]         Halfword from memory to register
-                     Load halfword, unsigned        lhu x5, 40(x6)      x5 = Memory[x6 + 40]         Unsigned halfword from memory to register
-      Data           Store halfword                 sh x5, 40(x6)       Memory[x6 + 40] = x5         Halfword from register to memory
-      transfer       Load byte                      lb x5, 40(x6)       x5 = Memory[x6 + 40]         Byte from memory to register
-                     Load byte, unsigned            lbu x5, 40(x6)      x5 = Memory[x6 + 40]         Byte halfword from memory to register
-                     Store byte                     sb x5, 40(x6)       Memory[x6 + 40] = x5         Byte from register to memory
-                     Load reserved                  lr.d x5, (x6)       x5 = Memory[x6]              Load; 1st half of atomic swap
-                     Store conditional              sc.d x7, x5, (x6)   Memory[x6] = x5; x7 = 0/1    Store; 2nd half of atomic swap
-                     Load upper immediate           lui x5, 0x12345     x5 = 0x12345000              Loads 20-bit constant shifted left 12 bits
-                     Add upper immediate to PC      auipc x5, 0x12345   x5 = PC + 0x12345000         Used for PC-relative data addressing
-      -----------------------------------------------------------------------------------------------------------------------------------------------
-                     And                            and x5, x6, x7      x5 = x6 & x7                 Three reg. operands; bit-by-bit AND
-                     Inclusive or                   or x5, x6, x8       x5 = x6 | x8                 Three reg. operands; bit-by-bit OR
-                     Exclusive or                   xor x5, x6, x9      x5 = x6 ^ x9                 Three reg. operands; bit-by-bit XOR
-      Logical        And immediate                  andi x5, x6, 20     x5 = x6 & 20                 Bit-by-bit AND reg. with constant
-                     Inclusive or immediate         ori x5, x6, 20      x5 = x6 | 20                 Bit-by-bit OR reg. with constant
-                     Exclusive or immediate         xori x5, x6, 20     x5 = x6 ^ 20                 Bit-by-bit XOR reg. with constant
-      -----------------------------------------------------------------------------------------------------------------------------------------------
-                     Shift left logical             sll x5, x6, x7      x5 = x6 << x7                Shift left by register
-                     Shift right logical            srl x5, x6, x7      x5 = x6 >> x7                Shift right by register
-                     Shift right arithmetic         sra x5, x6, x7      x5 = x6 >> x7                Arithmetic shift right by register
-      Shift          Shift left logical immediate   slli x5, x6, 3      x5 = x6 << 3                 Shift left by immediate
-                     Shift right logical            srli x5, x6, 3      x5 = x6 >> 3                 Shift right by immediate
-                     immediate
-                     Shift right arithmetic         srai x5, x6, 3      x5 = x6 >> 3                 Arithmetic shift right by immediate
-                     immediate
-      -----------------------------------------------------------------------------------------------------------------------------------------------
-                     Branch if equal                beq x5, x6, 100     if (x5 == x6) go to PC+100   PC-relative branch if registers equal
-                     Branch if not equal            bne x5, x6, 100     if (x5 != x6) go to PC+100   PC-relative branch if registers not equal
-      Conditional    Branch if less than            blt x5, x6, 100     if (x5 < x6) go to PC+100    PC-relative branch if registers less
-      branch         Branch if greater or equal     bge x5, x6, 100     if (x5 >= x6) go to PC+100   PC-relative branch if registers greater or equal
-                     Branch if less, unsigned       bltu x5, x6, 100    if (x5 < x6) go to PC+100    PC-relative branch if registers less
-                     Branch if greatr/eq,           bgeu x5, x6, 100    if (x5 >= x6) go to PC+100   PC-relative branch if registers greater or equal
-                     unsigned
-      -----------------------------------------------------------------------------------------------------------------------------------------------
-      Uncondit-      Jump and link                  jal x1, 100         x1 = PC+4; go to PC+100      PC-relative procedure call
-      ional branch   Jump and link register         jalr x1, 100(x5)    x1 = PC+4; go to x5+100      Procedure return; indirect call
-
-</p>
-<!-- <iframe src="https://docs.google.com/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true" style="margin-left: 10%; width:80%; height:500px;" frameborder="0"></iframe> -->
-<!-- <iframe id="ifr" src="http://docs.google.com/gview?url=http://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf&embedded=true" style="width:100%; height:700px;" frameborder="0" /> -->
-<!-- <p> -->
-<!-- <iframe width="80%" height="110%" src="riscvinstructions.pdf" /> -->
-<!-- </p> -->
-<hr>
-<h4 style="text-align: right;">∂. -7</h4>
-
 <script>
 
 /* http://mathjs.org/ */
@@ -305,6 +181,130 @@ function perf3()
 
 
 </script>
+
+<h1>Org Notes</h1>
+<hr><hr>
+
+<h2>Performance</h2>
+<p>Prefix name    deca  hecto kilo  mega  giga  tera  peta  exa   zetta yotta
+Prefix symbol     da h  k  M  G  T  P  E  Z  Y
+Factor      10^0  10^1  10^2  10^3  10^6  10^9  10^12 10^15 10^18 10^21 10^24
+
+Prefix name          deci  centi milli micro nano  pico  femto atto  zepto yocto
+Prefix symbol     d  c  m  μ  n  p  f  a  z  y
+Factor      10^0  10^−1 10^−2 10^−3 10^−6 10^−9 10^−12   10^−15   10^−18   10^−21   10^−24
+
+Hz = 1 / s
+
+execution time [sec / function] = [sec / cycle] * [cycles / instruction] * [instructions / function]
+
+clock rate = cycles / sec
+CPI = cycles / instruction
+
+performance [instructions / sec] = ( clock rate [cycles / sec] ) / ( CPI [cycles / instruction] )
+<input id="performance0" />       = <input id="clockRate0" oninput="perf0();" />  / <input id="CPI0" oninput="perf0();" />
+</p>
+<hr>
+<h2>Decimal | Binary | Hex</h2>
+<p>Decimal  <input style="width: 24em;" id="dec1" oninput="perf1dec();" />
+Binary   <input style="width: 24em;" id="bin1" oninput="perf1bin();" />
+Hex   <input style="width: 24em;" id="hex1" oninput="perf1hex();" />
+</p>
+<!-- <input id="f01" oninput="perf1();" /> x<input id="f11" oninput="perf1();" />, x<input id="f21" oninput="perf1();" />, x<input id="f31" oninput="perf1();" />
+   -> <input style="width: 24em;" id="outInstB1" /> ~ <input style="width: 24em;" id="outInstBu1" />
+   -> <input style="width: 24em;" id="outInstX1" />
+
+<input id="f02" oninput="perf2();" /> x<input id="f12" oninput="perf2();" />, <input id="f22" oninput="perf2();" />( x<input id="f32" oninput="perf2();" /> )
+   -> <input style="width: 24em;" id="outInstB2" /> ~ <input style="width: 24em;" id="outInstBu2" />
+   -> <input style="width: 24em;" id="outInstX2" /> -->
+
+<h2>Machine Code -> Assembly Code</h2>
+<p>0x<input id="hex3" oninput="perf3();" />
+<input style="width: 24em;" id="bin3" />
+<input style="width: 24em;" id="binsp3" />
+   rd=x<input id="rd3" />
+   rs1=x<input id="rs13" />
+   rs2=x<input id="rs23" />
+   imm[11:0]=<input id="imm11003" />
+   imm[12|10:5,4:1|11]=<input id="immbranch3" />
+   imm[11:5,4:0]=<input id="imm110504003" />
+   imm[20|10:1|11|19:12]=<input id="immjal3" />
+   imm[31:12]=<input id="imm31123" />
+</p>
+<hr>
+<h2>RISC-V Assembly Language</h2>
+<p>      Category       Instruction                    Example             Meaning                      Comments
+      -----------------------------------------------------------------------------------------------------------------------------------------------
+      Arithmetic     Add                            add x5, x6, x7      x5 = x6 + x7                 Three register operands
+                     Subtract                       sub x5, x6, x7      x5 = x6 - x7                 Three register operands
+                     Add immediate                  addi x5, x6, 20     x5 = x6 + 20                 Used to add constants
+                     Set if less than               slt x5, x6, x7      x5 = 1 if x5 < x6, else 0    Three register operands
+                     Set if less than, unsigned     sltu x5, x6, x7     x5 = 1 if x5 < x6, else 0    Three register operands
+                     Set if less than, immediate    slti x5, x6, x7     x5 = 1 if x5 < x6, else 0    Comparison with immediate
+                     Set if less than immediate,    sltiu x5, x6, x7    x5 = 1 if x5 < x6, else 0    Comparison with immediate
+                     uns.
+                     Multiply                       mul x5, x6, x7      x5 = x6 × x7                 Lower 64 bits of 128-bit product
+                     Multiply high                  mulh x5, x6, x7     x5 = (x6 × x7) >> 64         Upper 64 bits of 128-bit signed product
+                     Multiply high, unsigned        mulhu x5, x6, x7    x5 = (x6 × x7) >> 64         Upper 64 bits of 128-bit unsigned
+                                                                                                     product
+                     Multiply high, signed-         mulhsu x5, x6, x7   x5 = (x6 × x7) >> 64         Upper 64 bits of 128-bit signed-
+                     unsigned                                                                        unsigned product
+                     Divide                         div x5, x6, x7      x5 = x6 / x7                 Divide signed 64-bit numbers
+                     Divide unsigned                divu x5, x6, x7     x5 = x6 / x7                 Divide unsigned 64-bit numbers
+                     Remainder                      rem x5, x6, x7      x5 = x6 % x7                 Remainder of signed 64-bit division
+                     Remainder unsigned             remu x5, x6, x7     x5 = x6 % x7                 Remainder of unsigned 64-bit division
+      -----------------------------------------------------------------------------------------------------------------------------------------------
+                     Load doubleword                ld x5, 40(x6)       x5 = Memory[x6 + 40]         Doubleword from memory to register
+                     Store doubleword               sd x5, 40(x6)       Memory[x6 + 40] = x5         Doubleword from register to memory
+                     Load word                      lw x5, 40(x6)       x5 = Memory[x6 + 40]         Word from memory to register
+                     Load word, unsigned            lwu x5, 40(x6)      x5 = Memory[x6 + 40]         Unsigned word from memory to register
+                     Store word                     sw x5, 40(x6)       Memory[x6 + 40] = x5         Word from register to memory
+                     Load halfword                  lh x5, 40(x6)       x5 = Memory[x6 + 40]         Halfword from memory to register
+                     Load halfword, unsigned        lhu x5, 40(x6)      x5 = Memory[x6 + 40]         Unsigned halfword from memory to register
+      Data           Store halfword                 sh x5, 40(x6)       Memory[x6 + 40] = x5         Halfword from register to memory
+      transfer       Load byte                      lb x5, 40(x6)       x5 = Memory[x6 + 40]         Byte from memory to register
+                     Load byte, unsigned            lbu x5, 40(x6)      x5 = Memory[x6 + 40]         Byte halfword from memory to register
+                     Store byte                     sb x5, 40(x6)       Memory[x6 + 40] = x5         Byte from register to memory
+                     Load reserved                  lr.d x5, (x6)       x5 = Memory[x6]              Load; 1st half of atomic swap
+                     Store conditional              sc.d x7, x5, (x6)   Memory[x6] = x5; x7 = 0/1    Store; 2nd half of atomic swap
+                     Load upper immediate           lui x5, 0x12345     x5 = 0x12345000              Loads 20-bit constant shifted left 12 bits
+                     Add upper immediate to PC      auipc x5, 0x12345   x5 = PC + 0x12345000         Used for PC-relative data addressing
+      -----------------------------------------------------------------------------------------------------------------------------------------------
+                     And                            and x5, x6, x7      x5 = x6 & x7                 Three reg. operands; bit-by-bit AND
+                     Inclusive or                   or x5, x6, x8       x5 = x6 | x8                 Three reg. operands; bit-by-bit OR
+                     Exclusive or                   xor x5, x6, x9      x5 = x6 ^ x9                 Three reg. operands; bit-by-bit XOR
+      Logical        And immediate                  andi x5, x6, 20     x5 = x6 & 20                 Bit-by-bit AND reg. with constant
+                     Inclusive or immediate         ori x5, x6, 20      x5 = x6 | 20                 Bit-by-bit OR reg. with constant
+                     Exclusive or immediate         xori x5, x6, 20     x5 = x6 ^ 20                 Bit-by-bit XOR reg. with constant
+      -----------------------------------------------------------------------------------------------------------------------------------------------
+                     Shift left logical             sll x5, x6, x7      x5 = x6 << x7                Shift left by register
+                     Shift right logical            srl x5, x6, x7      x5 = x6 >> x7                Shift right by register
+                     Shift right arithmetic         sra x5, x6, x7      x5 = x6 >> x7                Arithmetic shift right by register
+      Shift          Shift left logical immediate   slli x5, x6, 3      x5 = x6 << 3                 Shift left by immediate
+                     Shift right logical            srli x5, x6, 3      x5 = x6 >> 3                 Shift right by immediate
+                     immediate
+                     Shift right arithmetic         srai x5, x6, 3      x5 = x6 >> 3                 Arithmetic shift right by immediate
+                     immediate
+      -----------------------------------------------------------------------------------------------------------------------------------------------
+                     Branch if equal                beq x5, x6, 100     if (x5 == x6) go to PC+100   PC-relative branch if registers equal
+                     Branch if not equal            bne x5, x6, 100     if (x5 != x6) go to PC+100   PC-relative branch if registers not equal
+      Conditional    Branch if less than            blt x5, x6, 100     if (x5 < x6) go to PC+100    PC-relative branch if registers less
+      branch         Branch if greater or equal     bge x5, x6, 100     if (x5 >= x6) go to PC+100   PC-relative branch if registers greater or equal
+                     Branch if less, unsigned       bltu x5, x6, 100    if (x5 < x6) go to PC+100    PC-relative branch if registers less
+                     Branch if greatr/eq,           bgeu x5, x6, 100    if (x5 >= x6) go to PC+100   PC-relative branch if registers greater or equal
+                     unsigned
+      -----------------------------------------------------------------------------------------------------------------------------------------------
+      Uncondit-      Jump and link                  jal x1, 100         x1 = PC+4; go to PC+100      PC-relative procedure call
+      ional branch   Jump and link register         jalr x1, 100(x5)    x1 = PC+4; go to x5+100      Procedure return; indirect call
+
+</p>
+<!-- <iframe src="https://docs.google.com/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true" style="margin-left: 10%; width:80%; height:500px;" frameborder="0"></iframe> -->
+<!-- <iframe id="ifr" src="http://docs.google.com/gview?url=http://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf&embedded=true" style="width:100%; height:700px;" frameborder="0" /> -->
+<!-- <p> -->
+<!-- <iframe width="80%" height="110%" src="riscvinstructions.pdf" /> -->
+<!-- </p> -->
+<hr>
+<h4 style="text-align: right;">∂. -7</h4>
 
 </body>
 
