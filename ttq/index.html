@@ -80,60 +80,78 @@ Good luck and have a nice day. <br /> -7
         // https://bl.ocks.org/pstuffa
     // https://github.com/cufcq/cufcq
 
+    // thanks to the following for fixing the shit when the shit broke
+        // https://stackoverflow.com/questions/10418644/creating-an-iframe-with-given-html-dynamically
+        // https://stackoverflow.com/questions/1088544/get-element-from-within-an-iframe
+        // https://www.kochan.io/javascript/how-to-dynamically-create-an-iframe.html
+
 var disparityAdder, qErrata;
+var sauce, iframe;
 
-$.get('http://allorigins.us/get?method=raw&url=' + encodeURIComponent('https://mee6.xyz/levels/310961725983686656') + '&callback=?', function(data){
+$.get('https://allorigins.me/get?method=raw&url=' + encodeURIComponent('https%3A//mee6.xyz/levels/310961725983686656'), function(data){
 
-    var sauce = document.createElement( "div" );
-    sauce.innerHTML = data;
+    // var sauce = document.createElement( "div" );
+    // sauce.innerHTML = data;
 
-    var juicyShit = sauce.getElementsByTagName( "h3" );
-    var perturbation = sauce.getElementsByTagName( "h5" );
+    iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+    iframe.src = 'javascript:(function() {' + 'document.open();document.domain=\'' + document.domain + '\';document.close();})();';
+    iframe.contentWindow.document.write( data );
+    sauce = iframe.contentDocument || iframe.contentWindow.document;
 
-    var mathBox = x => 5 * x * x + 50 * x + 100;
-
-    var q = parseInt( juicyShit[2].innerText.substring( 6 ) );
-
-    disparityAdder = l => q - l - 1 < 0 ? 0 : Array.from( new Array( q - l - 1 ), (v, i) => l + i + 1 ).reduce( (s, i) => s + mathBox( i ), 0 );
-
-    qErrata = parseInt( perturbation[0].innerText.substring( 0, perturbation[0].innerText.indexOf( " " ) ) );
-    var perturb = l => qErrata + parseInt( l.substring( l.indexOf( " " ) + 3, l.indexOf( " XP" ) ) ) - parseInt( l.substring( 0, l.indexOf( " " ) ) );
-
-
-    sauce.remove();
-
-    var statBox = document.getElementById( "lardboard" );
-
-    for( var i = 4; i < juicyShit.length; i += 3 )
+    setTimeout( function()
     {
-        // console.log( juicyShit[i].innerHTML )
-        var rho = document.createElement( "tr" );
+        var juicyShit = sauce.getElementsByTagName( "h3" );
+        var perturbation = sauce.getElementsByTagName( "h5" );
 
-        var todd = document.createElement( "td" );
-        todd.innerText = Math.floor( i / 3 ) + 1;
-        rho.appendChild( todd );
+        var mathBox = x => 5 * x * x + 50 * x + 100;
 
-        todd = document.createElement( "td" );
-        todd.innerText = juicyShit[i].innerText;
-        rho.appendChild( todd );
+        var q = parseInt( juicyShit[2].innerText.substring( 6 ) );
 
-        todd = document.createElement( "td" );
-        var xp = disparityAdder( parseInt( juicyShit[i+1].innerText.substring( 6 ) ) ) + perturb( perturbation[ Math.floor( i / 3 ) ].innerText );
-        todd.innerText = xp;
-        rho.appendChild( todd );
+        disparityAdder = l => q - l - 1 < 0 ? 0 : Array.from( new Array( q - l - 1 ), (v, i) => l + i + 1 ).reduce( (s, i) => s + mathBox( i ), 0 );
 
-        todd = document.createElement( "td" );
-        todd.innerText = xp / 20;
-        rho.appendChild( todd );
+        qErrata = parseInt( perturbation[0].innerText.substring( 0, perturbation[0].innerText.indexOf( " " ) ) );
+        var perturb = l => qErrata + parseInt( l.substring( l.indexOf( " " ) + 3, l.indexOf( " XP" ) ) ) - parseInt( l.substring( 0, l.indexOf( " " ) ) );
 
-        todd = document.createElement( "td" );
-        todd.innerText = xp / 20 / 60;
-        rho.appendChild( todd );
 
-        statBox.appendChild( rho );
-    }
+        iframe.remove();
 
-    // document.body.innerHTML = juicyShit[1].innerText;
+        var statBox = document.getElementById( "lardboard" );
+
+        for( var i = 4; i < juicyShit.length; i += 3 )
+        {
+            // console.log( juicyShit[i].innerHTML )
+            var rho = document.createElement( "tr" );
+
+            var todd = document.createElement( "td" );
+            todd.innerText = Math.floor( i / 3 ) + 1;
+            rho.appendChild( todd );
+
+            todd = document.createElement( "td" );
+            todd.innerText = juicyShit[i].innerText;
+            rho.appendChild( todd );
+
+            todd = document.createElement( "td" );
+            console.log( parseInt( juicyShit[i+1].innerText.substring( 6 ) ) + " " + perturb( perturbation[ Math.floor( i / 3 ) ].innerText ) )
+            var xp = disparityAdder( parseInt( juicyShit[i+1].innerText.substring( 6 ) ) ) + perturb( perturbation[ Math.floor( i / 3 ) ].innerText );
+            todd.innerText = xp;
+            rho.appendChild( todd );
+
+            todd = document.createElement( "td" );
+            todd.innerText = xp / 20;
+            rho.appendChild( todd );
+
+            todd = document.createElement( "td" );
+            todd.innerText = xp / 20 / 60;
+            rho.appendChild( todd );
+
+            statBox.appendChild( rho );
+        }
+
+        // document.body.innerHTML = juicyShit[1].innerText;
+
+    }, 7000);
+
 } );
 
 var lvlBox = document.getElementById( "lvl" );
