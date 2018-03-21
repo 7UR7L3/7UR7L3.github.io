@@ -34,7 +34,7 @@ tr:nth-child(even) {
 
 
 <body>
-<h1>Time 'Till Quinny !</h1>
+<!-- <h1>Time 'Till Quinny !</h1>
 <hr>
 
 If you're a noob, we can still calculate your distance from Q! Just punch in your current level and xp, obtained via a `!rank` :D <br />
@@ -71,9 +71,39 @@ More info on <a href="https://mee6.xyz/levels/310961725983686656">dis meeb shit<
 <br />
 <hr>
 <br />
-Good luck and have a nice day. <br /> -7
+Good luck and have a nice day. <br /> -7 -->
 
+<!-- <iframe id="x" src="https://mee6.xyz/levels/310961725983686656" width="600" height="800" marginwidth="0" marginheight="0" frameborder="no" scrolling="yes">
+     </iframe> -->
+<iframe id="myIframe" src="https://mee6.xyz/levels/310961725983686656" onLoad="iframeDidLoad();"></iframe>
 <script>
+
+    function iframeDidLoad( e ) {
+    console.log('Done');
+    console.log( e );
+}
+
+function newSite() {
+    var sites = ['http://getprismatic.com',
+                 'http://gizmodo.com/',
+                 'http://lifehacker.com/']
+
+    document.getElementById('myIframe').src = sites[Math.floor(Math.random() * sites.length)];
+}    
+
+iframe = document.createElement('iframe');
+document.body.appendChild(iframe);
+iframe.src = 'javascript:(function() {' + 'document.open();document.domain=\'' + document.domain + '\';document.close();})();';
+sauce = iframe.contentDocument || iframe.contentWindow.document;
+iframe.src = "https://mee6.xyz/levels/310961725983686656";
+iframe.contentWindow.document.write( "fuck" );
+
+setTimeout( function()
+{
+    // console.log( document.getElementById( "x" ) );
+
+    console.log( sauce.getElementsByClassName( "PlayerUserName" ) );
+}, 2000 );
 
     // https://github.com/gnuns/AllOrigins
     // https://d3js.org/
@@ -154,22 +184,26 @@ $.get('https://allorigins.me/get?method=raw&url=' + encodeURIComponent('https%3A
 
 } );
 
-var lvlBox = document.getElementById( "lvl" );
-var expMinBox = document.getElementById( "expmin" ), expMaxBox = document.getElementById( "expmax" );
+//     }, 1500);
 
-function comput()
-{
-    var l = parseInt( lvlBox.value )
-    var out = document.getElementById( "computed" );
-    out.innerHTML = "You, my dude, have ";
-    var xp = disparityAdder( parseInt( lvlBox.value ) ) + qErrata + parseInt( expMaxBox.value ) - parseInt( expMinBox.value );
-    out.innerHTML += xp;
-    out.innerHTML += " XP left to catch up, which is ";
-    out.innerHTML += xp / 20;
-    out.innerHTML += " message minutes on average. That means it'll probably take ";
-    out.innerHTML += xp / 20 / 60;
-    out.innerHTML += " hours to usurp her."
-}
+// } );
+
+// var lvlBox = document.getElementById( "lvl" );
+// var expMinBox = document.getElementById( "expmin" ), expMaxBox = document.getElementById( "expmax" );
+
+// function comput()
+// {
+//     var l = parseInt( lvlBox.value )
+//     var out = document.getElementById( "computed" );
+//     out.innerHTML = "You, my dude, have ";
+//     var xp = disparityAdder( parseInt( lvlBox.value ) ) + qErrata + parseInt( expMaxBox.value ) - parseInt( expMinBox.value );
+//     out.innerHTML += xp;
+//     out.innerHTML += " XP left to catch up, which is ";
+//     out.innerHTML += xp / 20;
+//     out.innerHTML += " message minutes on average. That means it'll probably take ";
+//     out.innerHTML += xp / 20 / 60;
+//     out.innerHTML += " hours to usurp her."
+// }
 
 </script>
 
