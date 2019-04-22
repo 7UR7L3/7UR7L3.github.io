@@ -1,0 +1,498 @@
+<html>
+
+<head>
+
+<title>Vietversary 2019</title>
+
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozfsd/dist/lozfsd.min.js"></script> -->
+
+<link href="https://fonts.googleapis.com/css?family=Pinyon+Script" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Italianno" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Monsieur+La+Doulaise" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+
+
+<style>
+
+body, html
+{
+	background-color: peachpuff;
+	font-family: 'Cookie', cursive;
+	color: #40372E;
+	font-size: 30px;
+	margin: 0;
+	text-align: center;
+}
+h1
+{
+font-family: 'Pinyon Script', cursive;
+font-size: 80px;
+margin-bottom: 30px;
+}
+h5
+{
+font-size: 14px;
+margin-bottom: 0;
+font-family: 'Playfair Display SC', serif;
+}
+h2
+{
+font-size: 40px;
+margin-bottom: 10px;
+font-family: 'Oswald', sans-serif;
+}
+a
+{
+color: #40372E;
+}
+/* thanks https://css-tricks.com/examples/hrs/ */
+hr {
+    border: 0;
+    height: 1px;
+    /*background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));*/
+    background-color: grey;
+    width: 450px;
+}
+
+
+/* thanks https://stackoverflow.com/a/22603610 */
+.strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+
+.strike > h2 {
+    position: relative;
+    display: inline-block;
+}
+
+.strike > h2:before {
+    content: "🙞";
+    position: absolute;
+    bottom: 95%;
+    width: 15%;
+    height: 3px;
+    font-size: 40px;
+    /*background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #665458);*/
+/*background: white;*/
+
+}
+.strike > h2:after {
+    content: "🙜";
+    position: absolute;
+    bottom: 95%;
+    width: 15%;
+    height: 3px;
+    font-size: 40px;
+    /*background-image: linear-gradient(to left, rgba(0, 0, 0, 0), #665458);*/
+/*background: white;*/
+}
+
+.strike > h2:before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.strike > h2:after {
+    left: 100%;
+    margin-left: 15px;
+}
+
+.description
+{
+	width: 800px;
+	margin: auto;
+}
+.names
+{
+font-family: 'Monsieur La Doulaise', cursive;
+font-size: 75px;
+background-color: peachpuff;
+width: 350px;
+border: 1px solid #40372E;
+padding: 200x;
+margin: 10px;
+text-align: center;
+}
+
+
+h1
+{
+	text-align: center;
+	width: 100%;
+	padding-top: 25px;
+}
+
+img
+{
+	height: 400px;
+}
+
+body img
+{
+	/*box-shadow: 0 0 0px black;*/
+	transition: all .1s;
+	margin: 2px;
+	border-radius: 10px;
+	border: solid white 3px;
+}
+
+body img:hover
+{
+	/*box-shadow: 0 0 25px #EEE;*/
+	transform: scale( 1.02 );
+}
+
+#thicc
+{
+	max-width: 100%;
+	max-height: 100%;
+	height: auto;
+	object-fit: scale-down;
+	vertical-align: middle;
+	box-shadow: 0 0 50px black;
+	margin: 0;
+	border: none;
+	border-radius: 0;
+}
+
+#bigholder
+{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba( 0, 0, 0, .6 );
+	vertical-align: middle;
+	text-align: center;
+	z-index: 100;
+}
+
+.vcenter
+{
+	height: 100%;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+<script>
+
+// thanks https://dzone.com/articles/find-next-sibling-element
+//+ Jonas Raoni Soares Silva
+//@ http://jsfromhell.com
+function findNext(o, tag){
+	for(tag = tag.toLowerCase(); o = o.nextSibling;)
+		if(o.tagName && o.tagName.toLowerCase() == tag)
+			return o;
+	return null;
+}
+function findPrev(o, tag){
+	for(tag = tag.toLowerCase(); o = o.previousSibling;)
+		if(o.tagName && o.tagName.toLowerCase() == tag)
+			return o;
+	return null;
+}
+
+// ---	
+
+function biggify( e )
+{
+	document.getElementById( "thicc" ).src = e.src;
+	document.getElementById( "thicc" ).thiccelement = e;
+	document.getElementById( "thicclink" ).href = e.src;
+	document.getElementById( "thicclink" ).target = "_blank";
+	document.getElementById( "bigholder" ).style.display = "";
+}
+
+function unbiggify()
+{
+	document.getElementById( "bigholder" ).style.display = "none";
+}
+
+function keyControls( e )
+{
+	if( e.code == "Escape" ) unbiggify();
+	else if( e.code == "ArrowLeft" )
+	{
+		var prev = findPrev( document.getElementById( "thicc" ).thiccelement, "img" );
+		if( prev ) biggify( prev );
+	}
+	else if( e.code == "ArrowRight" )
+	{
+		var next = findNext( document.getElementById( "thicc" ).thiccelement, "img" );
+		if( next ) biggify( next );
+	}
+	else if( e.code == "Enter" )
+	{
+		var bigg = document.getElementById( "thicc" ).thiccelement;
+		if( bigg && document.getElementById( "bigholder" ).style.display != "none" ) document.getElementById( "thicclink" ).click();
+		console.log( bigg )
+	}
+}
+
+document.onkeydown = keyControls;
+
+</script>
+
+<!-- html is fucking cancer -->
+<div id="bigholder" style="display: none;" onclick="unbiggify();"><div class="vcenter"></div><img id="thicc" usemap="#thicclink"></div>
+<map name="thicclink"><area shape="default" id="thicclink"></map>
+
+<h1>Vietversary 2019</h1>
+<h5>CLICK | ARROWS | ENTER | ESC | ZOOM | <a href="https://github.com/7UR7L3/7UR7L3.github.io/tree/master/regalesite">GitHub</a></h5>
+
+<hr />
+<!-- /*im ur calendar right here. and i'm a download link. and a link to github*/-->
+<h5>
+Bien Hoa, Vietnam
+<br />
+February 2019
+<br />
+1st year anniversary
+</h5>
+<br />
+<center><div class="names">Michael Rahn</div><center>
+❀❀❀
+<div class="names">Quinny Hwang</div><center>
+</h4>
+
+<div class="strike"><h2 id="feb3">Sunday, Feb 3</h2></div>
+<div class="description">Eli drove his brother down to Denver and then drove me to the airport. 
+<br />✈ Flight from DEN to LAX to ICN to SGN.</div>
+<img onclick="biggify(this);" src="img/20190203_042920.jpg">
+<img onclick="biggify(this);" src="img/20190203_062007.jpg">
+<img onclick="biggify(this);" src="img/20190203_064158.jpg">
+<img onclick="biggify(this);" src="img/20190203_064206.jpg">
+<img onclick="biggify(this);" src="img/20190203_064626.jpg">
+<img onclick="biggify(this);" src="img/20190203_065049.jpg">
+<img onclick="biggify(this);" src="img/20190203_105300.jpg">
+<img onclick="biggify(this);" src="img/20190203_122856.jpg">
+<img onclick="biggify(this);" src="img/20190204_143930.jpg">
+
+<div class="strike"><h2 id="feb4">Monday, Feb 4</h2></div>
+<div class="description">Flew from Incheon South Korea to Ho Chi Minh City. Arrived (and got out of the airport with 15 minutes left until midnight!). We drove to a bridge to watch the fireworks on Lunar New Year's Eve. Went home and ate ramen for dinner.</div>
+<img onclick="biggify(this);" src="img/20190204_185402.jpg">
+<img onclick="biggify(this);" src="img/20190204_200700.jpg">
+<img onclick="biggify(this);" src="img/20190204_202650.jpg">
+<img onclick="biggify(this);" src="img/20190205_005051.jpg">
+
+<img onclick="biggify(this);" src="img/IMG_5823.JPG">
+
+<img onclick="biggify(this);" src="img/20190205_000255.jpg">
+<img onclick="biggify(this);" src="img/20190205_001035.jpg">
+<img onclick="biggify(this);" src="img/20190205_001039.jpg">
+<img onclick="biggify(this);" src="img/20190205_001046.jpg">
+<img onclick="biggify(this);" src="img/20190205_001048.jpg">
+
+<img onclick="biggify(this);" src="img/20190205_023214.jpg">
+
+
+<div class="strike"><h2 id="feb5">Tuesday, Feb 5</h2></div>
+<div class="description">Ate breakfast then took the biggest nap. 
+<br />Both got Hong Pao from her parents, then gambled against them with it (blackjack) and made even more.
+<br />Ate lunch, went to a fancy flowery park, ate Bangkok coconut ice cream and Korean hot dogs.
+<br />Rate the food: ★★★☆☆</div>
+<img onclick="biggify(this);" src="img/20190205_201449.jpg">
+<img onclick="biggify(this);" src="img/20190205_201505.jpg">
+<img onclick="biggify(this);" src="img/20190205_201516.jpg">
+<img onclick="biggify(this);" src="img/20190205_201519.jpg">
+<img onclick="biggify(this);" src="img/20190205_203208.jpg">
+<img onclick="biggify(this);" src="img/20190205_205421.jpg">
+<img onclick="biggify(this);" src="img/20190205_211651.jpg">
+<img onclick="biggify(this);" src="img/20190205_212614.jpg">
+<img onclick="biggify(this);" src="img/20190205_213739.jpg">
+<img onclick="biggify(this);" src="img/20190205_214831.jpg">
+<img onclick="biggify(this);" src="img/20190205_215052.jpg">
+<img onclick="biggify(this);" src="img/20190205_215152.jpg">
+<img onclick="biggify(this);" src="img/20190205_215611.jpg">
+
+<img onclick="biggify(this);" src="img/20190207_205527.jpg">
+
+
+<div class="strike"><h2 id="feb6">Wednesday, Feb 6</h2></div>
+<div class="description">Ate breakfast and did the dishes, and ate some more. 
+<br /> Played some online game and brainstorm with that mind game called Gomoku.
+<br /> Ate bun dau mam tom: noodles, fried tofu, meat, vegetable and the traditional Vietnamese shrimp sauce.
+<br /> Rate the food: ★★★★★
+<br /> Picked up some ice cream and tea, went home and killed my throat with that karaoke song, "All of me" by John Legend.
+<br /> Rate Michael's singing: ★★★★★</div>
+<img onclick="biggify(this);" src="img/20190206_101922.jpg">
+<img onclick="biggify(this);" src="img/20190206_195634.jpg">
+<img onclick="biggify(this);" src="img/IMG_5906.JPG">
+
+
+<div class="strike"><h2 id="feb7">Thursday, Feb 7</h2></div>
+<div class="description">Breakfast with fried rice.
+<br />Got some tea, perused memes, did a homework assignment for natural language processing.
+<br /> Rate the tea: ★★★☆☆</div>
+<img onclick="biggify(this);" src="img/20190207_101238.jpg">
+<img onclick="biggify(this);" src="img/20190207_215407.jpg">
+<img onclick="biggify(this);" src="img/20190207_215541.jpg">
+
+<div class="strike"><h2 id="feb8">Friday, Feb 8</h2></div>
+<div class="description">Binged watch The Haunting of Hill House.
+<br />Rate the show: ★★★★★</div>
+<img onclick="biggify(this);" src="img/20190208_101204.jpg">
+<img onclick="biggify(this);" src="img/20190208_104342.jpg">
+<img onclick="biggify(this);" src="img/20190208_104359.jpg">
+<img onclick="biggify(this);" src="img/20190208_104500.jpg">
+<img onclick="biggify(this);" src="img/20190208_104637.jpg">
+<img onclick="biggify(this);" src="img/20190208_104752.jpg">
+
+<div class="strike"><h2 id="feb9">Saturday, Feb 9</h2></div>
+<div class="description">Ate and napped. 
+<br /> Went to a vintage style tea place and took vintage photos. 
+<br />Tutored Operating Systems that night.
+Rate the tea place: ★★★★☆</div>
+<img onclick="biggify(this);" src="img/20190209_191846.jpg">
+<img onclick="biggify(this);" src="img/20190209_191947.jpg">
+<img onclick="biggify(this);" src="img/20190209_193125.jpg">
+<img onclick="biggify(this);" src="img/20190209_195027.jpg">
+<img onclick="biggify(this);" src="img/20190209_195154.jpg">
+<img onclick="biggify(this);" src="img/20190209_195418.jpg">
+<img onclick="biggify(this);" src="img/20190209_200207.jpg">
+<img onclick="biggify(this);" src="img/IMG_5928.JPG">
+<img onclick="biggify(this);" src="img/20190209_205608.jpg">
+<img onclick="biggify(this);" src="img/20190209_215041.jpg">
+<img onclick="biggify(this);" src="img/20190209_215147.jpg">
+<img onclick="biggify(this);" src="img/20190209_215226.jpg">
+<img onclick="biggify(this);" src="img/20190209_215327.jpg">
+<img onclick="biggify(this);" src="img/20190209_215555.jpg">
+
+<div class="strike"><h2 id="feb10">Sunday, Feb 10</h2></div>
+<div class="description">Quinny had her first teaching session at her new job. It was kinda scary, but she got over it.
+<br /> We went to Lee Barbeque (the fancy restaurant of the trip, which is in Korean style) for dinner and to celebrate the anniversary early.
+<br /> Rate the restaurant: ★★★★★ (Quinny's favorite restaurant in town)</div>
+<img onclick="biggify(this);" src="img/20190210_174824.jpg">
+<img onclick="biggify(this);" src="img/20190210_204906.jpg">
+<img onclick="biggify(this);" src="img/20190210_210835.jpg">
+<img onclick="biggify(this);" src="img/20190210_214752.jpg">
+
+<div class="strike"><h2 id="feb11">Monday, Feb 11</h2></div>
+<div class="description">Ate and did the dishes. Went to a Dairy Queen at a plaza and tried some very good Matcha and Kitkat blizzard. 
+<br />Played air hockey and some basketball at an arcade. Discovery after the trip: Quinny is horrible at air hockey, Michael is terrible at basketball. 
+<br />Exchanged money at a bank, got eyes makeup applied by Quinny (shadows)
+<br />Went out for seafood with one of Giorgie's friends and got Hong Pao from him. 
+<br />Left and got boba tea with one of Quinny's friends (Yuan). 
+<br />Rate the seafood: ★★☆☆☆ 
+<br />Rate the boba tea: ★★★☆☆
+<br />Took an easy quiz at 3am.</div>
+
+<img onclick="biggify(this);" src="img/20190211_130928.jpg">
+<img onclick="biggify(this);" src="img/20190211_171949.jpg">
+<img onclick="biggify(this);" src="img/20190211_214729.jpg">
+<img onclick="biggify(this);" src="img/20190212_122526.jpg">
+
+
+<div class="strike"><h2 id="feb12">Tuesday, Feb 12</h2></div>
+<div class="description">Ate breakfast then watered the plants, watched movies with an online friend, then did the dishes.
+<br /> Quinny fried some snack to eat when watching another movie, but we were hungry birds so we devoured it in minutes.
+<br /> So we ended up ordering Korean food: jajang noodles, seaweed soup, tokbokki and sushi rolls.
+<br />Rate the Korean food: ★★★☆☆</div>
+<img onclick="biggify(this);" src="img/20190212_112402.jpg">
+<img onclick="biggify(this);" src="img/20190212_160845.jpg">
+
+<div class="strike"><h2 id="feb13">Wednesday, Feb 13</h2></div>
+<div class="description">Cooked ramen and squids with beansprouts, then ran errands for Giorgie (picked up some clothes for her store) in Ho Chi Minh City. Got Bingsu (shaved ice) and headed back to Bien Hoa after failing to find a spaghetti place.
+<br />So we went home, then Quinny made spaghetti and fried rice.
+<br />Napped, ate, and failed to watch another movie (darn internet).
+<br />Rate the bingsu: ★★★★★</div>
+<img onclick="biggify(this);" src="img/20190213_105820.jpg">
+<img onclick="biggify(this);" src="img/20190213_152327.jpg">
+<img onclick="biggify(this);" src="img/20190213_152509.jpg">
+<img onclick="biggify(this);" src="img/20190213_152528.jpg">
+<img onclick="biggify(this);" src="img/20190213_161021.jpg">
+<img onclick="biggify(this);" src="img/20190213_205030.jpg">
+
+
+<div class="strike"><h2 id="feb14">Thursday, Feb 14</h2></div>
+<div class="description">Had a tutoring session in the morning. Ate breakfest and left to get a flat tire of Quinny's motor scooter fixed.
+<br />Ate goat barbeque hot pot. Got a blended ice drink and chocolate cake. Did the dishes and successfully watched another movie with our online friend.
+<br />Rate the goat food: ★★★★☆
+<br />Rate the drink and cake: ★★★★★</div>
+<img onclick="biggify(this);" src="img/20190214_110526.jpg">
+<img onclick="biggify(this);" src="img/20190214_122609.jpg">
+<img onclick="biggify(this);" src="img/20190214_122615.jpg">
+<img onclick="biggify(this);" src="img/20190214_192656.jpg">
+<img onclick="biggify(this);" src="img/20190214_193230.jpg">
+<img onclick="biggify(this);" src="img/20190214_223630.jpg">
+
+
+
+<div class="strike"><h2 id="feb15">Friday, Feb 15</h2></div>
+<div class="description">Went to the market for groceries, then cooked. Took a nap before doing chores. 
+<br />Ate pizza for dinner, then went to a beer place, drank and ate some strange but good food (such as fries dipped in sugary butter). 
+<br />Picked up tea on the way home.
+<br />Rate the pizza: ★★★☆☆
+<br />Rate the beer and food: ★★★★★
+<br />Rate the boba tea: ★★★★★</div>
+<img onclick="biggify(this);" src="img/20190215_175445.jpg">
+<img onclick="biggify(this);" src="img/20190215_175650.jpg">
+<img onclick="biggify(this);" src="img/20190215_180016.jpg">
+<img onclick="biggify(this);" src="img/20190215_195959.jpg">
+<img onclick="biggify(this);" src="img/20190215_202931.jpg">
+<img onclick="biggify(this);" src="img/20190215_203220.jpg">
+<img onclick="biggify(this);" src="img/20190215_203442.jpg">
+<img onclick="biggify(this);" src="img/20190215_203525.jpg">
+<img onclick="biggify(this);" src="img/20190215_205941.jpg">
+
+
+<div class="strike"><h2 id="feb16">Saturday, Feb 16</h2></div>
+<div class="description">Did the dishes, ate breakfast, and took a nap. Quinny taught english again. We got Pho and sweet drinks afterwards: Matcha Ice Blended and Cookies Ice Blended.
+<br /> Rate the drinks: ★★★★★</div>
+<img onclick="biggify(this);" src="img/20190216_152227.jpg">
+<img onclick="biggify(this);" src="img/20190216_193358.jpg">
+<img onclick="biggify(this);" src="img/20190216_200134.jpg">
+
+<div class="strike"><h2 id="feb17">Sunday, Feb 17</h2></div>
+<div class="description">Finished packing and left for the airport early in the morning. The airport had a souvenir turtle (we couldn't find any in Bien Hoa). 
+<br />Flew back the same way I came. Saw what I believe I have scienced to be a seaweed farm: large black rectangles in the ocean. 
+<br />Ordered Quiznos from a magic food court machine in Incheon. Returned home and was picked up from the airport by Marcie.</div>
+<img onclick="biggify(this);" src="img/20190217_050733.jpg">
+<img onclick="biggify(this);" src="img/20190217_050737.jpg">
+<img onclick="biggify(this);" src="img/20190217_075431.jpg">
+<img onclick="biggify(this);" src="img/20190218_205852.jpg">
+<img onclick="biggify(this);" src="img/20190217_081024.jpg">
+<img onclick="biggify(this);" src="img/20190217_082919.jpg">
+<img onclick="biggify(this);" src="img/20190217_083911.jpg">
+<img onclick="biggify(this);" src="img/20190217_083940.jpg">
+<img onclick="biggify(this);" src="img/20190217_084053.jpg">
+<img onclick="biggify(this);" src="img/20190217_094504.jpg">
+<img onclick="biggify(this);" src="img/20190217_145704.jpg">
+<img onclick="biggify(this);" src="img/20190217_150721.jpg">
+<img onclick="biggify(this);" src="img/20190217_150828.jpg">
+<img onclick="biggify(this);" src="img/20190217_151500.jpg">
+<img onclick="biggify(this);" src="img/20190217_173422.jpg">
+<img onclick="biggify(this);" src="img/20190217_180020.jpg">
+<img onclick="biggify(this);" src="img/20190217_193038.jpg">
+<img onclick="biggify(this);" src="img/20190217_204032.jpg">
+<img onclick="biggify(this);" src="img/20190218_040104.jpg">
+<img onclick="biggify(this);" src="img/20190217_131840.jpg">
+<img onclick="biggify(this);" src="img/20190217_174548.jpg">
+<img onclick="biggify(this);" src="img/20190217_200136.jpg">
+<img onclick="biggify(this);" src="img/20190217_224412.jpg">
+
+
+
+<!-- <script>
+// neat https://apoorv.pro/lozfsd.js/
+const observer = lozfsd(); // lazy loads elements with default selector as '.lozfsd'
+observer.observe();
+</script> -->
+
+</body>
+
+</html>
